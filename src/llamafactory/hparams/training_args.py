@@ -69,13 +69,10 @@ class RayArguments:
             import pyarrow.fs as fs
 
             if self.ray_storage_filesystem == "s3":
-                aws_endpoint_url = os.getenv("AWS_ENDPOINT_URL", None)
-                aws_access_key = os.getenv("AWS_ACCESS_KEY_ID", None)
-                aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY", None)
                 self.ray_storage_filesystem = fs.S3FileSystem(
-                    access_key=aws_access_key,
-                    secret_key=aws_secret_key,
-                    endpoint_override=aws_endpoint_url
+                    access_key=os.getenv("AWS_ACCESS_KEY_ID", None),
+                    secret_key=os.getenv("AWS_SECRET_ACCESS_KEY", None),
+                    endpoint_override=os.getenv("AWS_ENDPOINT_URL", None)
                 )
             elif self.ray_storage_filesystem == "gs" or self.ray_storage_filesystem == "gcs":
                 self.ray_storage_filesystem = fs.GcsFileSystem()
