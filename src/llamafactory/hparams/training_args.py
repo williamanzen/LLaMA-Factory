@@ -66,9 +66,10 @@ class RayArguments:
                 )
 
             import pyarrow.fs as fs
+            import os
 
             if self.ray_storage_filesystem == "s3":
-                self.ray_storage_filesystem = fs.S3FileSystem()
+                self.ray_storage_filesystem = fs.S3FileSystem(endpoint_override=os.getenv("AWS_ENDPOINT_URL", None))
             elif self.ray_storage_filesystem == "gs" or self.ray_storage_filesystem == "gcs":
                 self.ray_storage_filesystem = fs.GcsFileSystem()
 
